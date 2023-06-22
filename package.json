@@ -9,7 +9,9 @@
   "scripts": {
     "prepare": "tsc",
     "lint": "eslint .",
-    "test": "tap"
+    "test": "tap",
+    "posttest": "npm run lint",
+    "snap": "tap"
   },
   "keywords": [],
   "author": "Nathan LaFreniere <nlf@nlf.sh>",
@@ -20,11 +22,20 @@
     "typescript": "~5.0.3"
   },
   "devDependencies": {
+    "@prisma/internals": "^4.16.0",
     "@tsconfig/node18": "^2.0.1",
     "@types/node": "^18.16.16",
+    "@types/tap": "^15.0.8",
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.9",
     "eslint": "^8.42.0",
-    "tap": "^16.3.6"
+    "prisma": "^4.16.0",
+    "tap": "^16.3.6",
+    "ts-node": "^10.9.1"
+  },
+  "tap": {
+    "coverage": true,
+    "ts": true,
+    "files": ["test/**/*.ts"]
   }
 }
