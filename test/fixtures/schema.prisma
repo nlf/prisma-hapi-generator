@@ -22,12 +22,13 @@ model Book {
   createdAt DateTime
   banned    Boolean
   reviews   Review[]
-  authorId  String
+  cost      Float
+  authorId  Decimal
   author    Author @relation(fields: [authorId], references: [id])
 }
 
 model Author {
-  id        String @id
+  id        Decimal @id
   firstName String
   lastName  String
   books     Book[]

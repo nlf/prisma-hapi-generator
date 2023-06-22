@@ -11,5 +11,8 @@ void t.test('generates types', async (t) => {
   generateTypesFile(project, options);
   await project.save();
 
+  const typesFile = project.getSourceFileOrThrow('/lib/types.ts');
+  t.matchSnapshot(typesFile.getFullText(), '/lib/types.ts');
+
   t.end();
 });

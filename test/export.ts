@@ -12,7 +12,7 @@ void t.test('generates exports', async (t) => {
   await project.save();
 
   const exportFile = project.getSourceFileOrThrow('/lib/index.ts');
-  t.matchSnapshot(exportFile, 'export file');
+  t.matchSnapshot(exportFile.getFullText(), '/lib/index.ts');
 
   t.end();
 });

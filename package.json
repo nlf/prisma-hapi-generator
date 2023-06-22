@@ -7,10 +7,10 @@
     "prisma-joi": "bin/prisma-joi.js"
   },
   "scripts": {
-    "prepare": "tsc",
     "lint": "eslint .",
     "test": "tap",
     "posttest": "npm run lint",
+    "presnap": "npm run pretest",
     "snap": "tap"
   },
   "keywords": [],
@@ -35,8 +35,10 @@
   },
   "tap": {
     "coverage": true,
-    "test-env": "NODE_ENV=test",
     "ts": true,
-    "files": ["test/**/*.ts"]
+    "test-env": "NODE_ENV=test",
+    "files": ["test/*.ts", "test/util/*.ts"],
+    "node-arg": ["-r", "ts-node/register"],
+    "nyc-arg": ["--exclude", "tap-snapshots"]
   }
 }

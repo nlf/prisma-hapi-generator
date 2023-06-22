@@ -115,8 +115,9 @@ export const ensureArrayDeclaration = (sourceFile: SourceFile, variableName: str
 };
 
 const ensureStatement = (sourceFile: SourceFile, variableName: string, options: EnsureVariableOptions) => {
+  const leadingTrivia = options.leadingTrivia ?? '';
   const variableStatement = sourceFile.getVariableStatement(variableName)
-    ?? sourceFile.addVariableStatement({ declarations: [{ name: variableName, type: options.type }] });
+    ?? sourceFile.addVariableStatement({ leadingTrivia, declarations: [{ name: variableName, type: options.type }] });
 
   const declarationKind = options.declarationKind ?? VariableDeclarationKind.Const;
   const isExported = options.isExported ?? false;

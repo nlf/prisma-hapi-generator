@@ -17,14 +17,14 @@ import {
 } from '../util';
 
 export function generateUpdateRouteFile (project: Project, model: DMMF.Model, options: GenerateOptions) {
-  const updateFilePath = join(options.cwd ?? options.config.output, 'update.ts');
+  const updateFilePath = join(options.cwd, 'update.ts');
   const updateFile = project.addSourceFileAtPathIfExists(updateFilePath) ?? project.createSourceFile(updateFilePath);
 
   ensureNamedImports(updateFile, '@hapi/hapi', {
     types: ['Request', 'ResponseToolkit', 'RouteOptions', 'RouteOptionsValidate', 'Lifecycle'],
   });
 
-  const relPath = project.createDirectory(options.cwd ?? options.config.output)
+  const relPath = project.createDirectory(options.cwd)
     .getRelativePathAsModuleSpecifierTo(options.config.output);
 
   ensureNamedImports(updateFile, relPath, {

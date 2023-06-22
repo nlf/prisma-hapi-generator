@@ -1,0 +1,7 @@
+{
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "include": ["**/*.ts", ".eslintrc.js"],
+  "compilerOptions": {
+    "noEmit": true
+  }
+}

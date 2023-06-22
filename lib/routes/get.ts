@@ -17,14 +17,14 @@ import {
 } from '../util';
 
 export function generateGetRouteFile (project: Project, model: DMMF.Model, options: GenerateOptions) {
-  const getFilePath = join(options.cwd ?? options.config.output, 'get.ts');
+  const getFilePath = join(options.cwd, 'get.ts');
   const getFile = project.addSourceFileAtPathIfExists(getFilePath) ?? project.createSourceFile(getFilePath);
 
   ensureNamedImports(getFile, '@hapi/hapi', {
     types: ['Request', 'ResponseToolkit', 'RouteOptions', 'Lifecycle'],
   });
 
-  const relPath = project.createDirectory(options.cwd ?? options.config.output)
+  const relPath = project.createDirectory(options.cwd)
     .getRelativePathAsModuleSpecifierTo(options.config.output);
 
   ensureNamedImports(getFile, relPath, {

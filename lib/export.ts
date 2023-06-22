@@ -8,6 +8,12 @@ export const generateExportFile = (project: Project, options: GenerateOptions) =
   const exportFile = project.createSourceFile(exportFilePath, {}, { overwrite: true });
 
   exportFile.addExportDeclaration({
+    leadingTrivia: (writer) => {
+      return writer
+        .write(options.fileHeader)
+        .newLine()
+        .newLine();
+    },
     namedExports: [
       'Prisma',
       'PrismaClient',

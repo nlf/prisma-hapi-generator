@@ -17,7 +17,7 @@ import {
 } from '../util';
 
 export function generateListRouteFile (project: Project, model: DMMF.Model, options: GenerateOptions) {
-  const listFilePath = join(options.cwd ?? options.config.output, 'list.ts');
+  const listFilePath = join(options.cwd, 'list.ts');
   const listFile = project.addSourceFileAtPathIfExists(listFilePath) ?? project.createSourceFile(listFilePath);
 
   ensureNamedImports(listFile, '@hapi/hapi', {

@@ -17,14 +17,14 @@ import {
 } from '../util';
 
 export function generateDeleteRouteFile (project: Project, model: DMMF.Model, options: GenerateOptions) {
-  const deleteFilePath = join(options.cwd ?? options.config.output, 'delete.ts');
+  const deleteFilePath = join(options.cwd, 'delete.ts');
   const deleteFile = project.addSourceFileAtPathIfExists(deleteFilePath) ?? project.createSourceFile(deleteFilePath);
 
   ensureNamedImports(deleteFile, '@hapi/hapi', {
     types: ['Request', 'ResponseToolkit', 'RouteOptions', 'Lifecycle'],
   });
 
-  const relPath = project.createDirectory(options.cwd ?? options.config.output)
+  const relPath = project.createDirectory(options.cwd)
     .getRelativePathAsModuleSpecifierTo(options.config.output);
 
   ensureNamedImports(deleteFile, relPath, {

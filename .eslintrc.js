@@ -11,11 +11,14 @@ module.exports = {
     '@typescript-eslint/semi': 'error',
     '@typescript-eslint/member-delimiter-style': 'error',
   },
-  ignorePatterns: ['coverage', 'tap-snapshots'],
+  ignorePatterns: ['coverage', 'tap-snapshots', 'lib/**/*.js'],
   overrides: [{
     files: ['test/**/*'],
     rules: {
       '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+    parserOptions: {
+      project: ['test/tsconfig.json'],
     },
   }],
   parser: '@typescript-eslint/parser',
