@@ -13,6 +13,7 @@
     "presnap": "npm run pretest",
     "snap": "tap"
   },
+  "files": ["bin/**/*.js", "lib/**/*.js"],
   "keywords": [],
   "author": "Nathan LaFreniere <nlf@nlf.sh>",
   "license": "ISC",
