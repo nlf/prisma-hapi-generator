@@ -259,10 +259,38 @@ import { CreateBook, DeleteBook, GetBook, ListBook, UpdateBook } from './book';
 import { CreateAuthor, DeleteAuthor, GetAuthor, ListAuthor, UpdateAuthor } from './author';
 import { CreateReview, DeleteReview, GetReview, ListReview, UpdateReview } from './review';
 
-const bookRoutes: ServerRoute[] = [{ method: 'POST', path: '/book', options: CreateBook }, { method: 'DELETE', path: '/book/{bookId}', options: DeleteBook }, { method: 'GET', path: '/book/{bookId}', options: GetBook }, { method: 'GET', path: '/book', options: ListBook }, { method: 'PUT', path: '/book/{bookId}', options: UpdateBook }];
-const authorRoutes: ServerRoute[] = [{ method: 'POST', path: '/author', options: CreateAuthor }, { method: 'DELETE', path: '/author/{authorId}', options: DeleteAuthor }, { method: 'GET', path: '/author/{authorId}', options: GetAuthor }, { method: 'GET', path: '/author', options: ListAuthor }, { method: 'PUT', path: '/author/{authorId}', options: UpdateAuthor }];
-const reviewRoutes: ServerRoute[] = [{ method: 'POST', path: '/review', options: CreateReview }, { method: 'DELETE', path: '/review/{reviewId}', options: DeleteReview }, { method: 'GET', path: '/review/{reviewId}', options: GetReview }, { method: 'GET', path: '/review', options: ListReview }, { method: 'PUT', path: '/review/{reviewId}', options: UpdateReview }];
-export const routes: ServerRoute[] = [...bookRoutes, ...authorRoutes, ...reviewRoutes];
+// DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
+const bookRoutes: ServerRoute[] = [
+  { method: 'POST', path: '/book', options: CreateBook },
+  { method: 'DELETE', path: '/book/{bookId}', options: DeleteBook },
+  { method: 'GET', path: '/book/{bookId}', options: GetBook },
+  { method: 'GET', path: '/book', options: ListBook },
+  { method: 'PUT', path: '/book/{bookId}', options: UpdateBook },
+];
+
+// DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
+const authorRoutes: ServerRoute[] = [
+  { method: 'POST', path: '/author', options: CreateAuthor },
+  { method: 'DELETE', path: '/author/{authorId}', options: DeleteAuthor },
+  { method: 'GET', path: '/author/{authorId}', options: GetAuthor },
+  { method: 'GET', path: '/author', options: ListAuthor },
+  { method: 'PUT', path: '/author/{authorId}', options: UpdateAuthor },
+];
+
+// DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
+const reviewRoutes: ServerRoute[] = [
+  { method: 'POST', path: '/review', options: CreateReview },
+  { method: 'DELETE', path: '/review/{reviewId}', options: DeleteReview },
+  { method: 'GET', path: '/review/{reviewId}', options: GetReview },
+  { method: 'GET', path: '/review', options: ListReview },
+  { method: 'PUT', path: '/review/{reviewId}', options: UpdateReview },
+];
+
+export const routes: ServerRoute[] = [
+  ...bookRoutes,
+  ...authorRoutes,
+  ...reviewRoutes,
+];
 
 `
 

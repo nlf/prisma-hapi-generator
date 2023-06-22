@@ -11,7 +11,7 @@ void t.test('ensureArrayDeclaration', (t) => {
     ensureArrayDeclaration(testFile, 'foo', {
       elements: ['bar', 'baz'],
     });
-    t.equal(testFile.print(), 'const foo = [bar, baz];\n');
+    t.equal(testFile.print(), 'const foo = [\n    bar,\n    baz\n];\n');
 
     t.end();
   });
@@ -33,7 +33,7 @@ void t.test('ensureArrayDeclaration', (t) => {
     ensureArrayDeclaration(testFile, 'foo', {
       elements: ['bar'],
     });
-    t.equal(testFile.print(), 'const foo = [bar];\n');
+    t.equal(testFile.print(), 'const foo = [\n    bar\n];\n');
 
     t.end();
   });

@@ -64,6 +64,12 @@ export function generateRouteFiles (project: Project, options: GenerateOptions) 
     routeTable.push(`{ method: 'PUT', path: '/${camelName}/{${camelName}Id}', options: ${updateImportName} }`);
 
     ensureArrayDeclaration(indexFile, `${camelName}Routes`, {
+      leadingTrivia: (writer) => {
+        return writer
+          .blankLineIfLastNot()
+          .write('// DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten')
+          .newLine();
+      },
       elements: routeTable,
       type: 'ServerRoute[]',
     });
@@ -76,6 +82,10 @@ export function generateRouteFiles (project: Project, options: GenerateOptions) 
   ensureArrayDeclaration(indexFile, 'routes', {
     isExported: true,
     elements: rootRouteTable,
+    leadingTrivia: (writer) => {
+      return writer
+        .blankLineIfLastNot();
+    },
     type: 'ServerRoute[]',
   });
 

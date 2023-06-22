@@ -107,7 +107,7 @@ export const ensureArrayDeclaration = (sourceFile: SourceFile, variableName: str
   const arrayElements = arrayInitializer.getElements();
   for (const arrayElement of options.elements ?? []) {
     if (!arrayElements.find((element) => element.getText() === arrayElement)) {
-      arrayInitializer.addElement(arrayElement);
+      arrayInitializer.addElement(`\n${arrayElement}`);
     }
   }
 
