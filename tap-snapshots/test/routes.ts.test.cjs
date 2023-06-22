@@ -103,8 +103,7 @@ async function handler(request: Request<UpdateAuthorPayload & AuthorParams>, h: 
     const result = await h.prisma.author.update({
       where: {
         id: request.params.authorId,
-      }
-      ,
+      },
       data: request.payload,
     });
 
@@ -228,8 +227,7 @@ async function handler(request: Request<UpdateBookPayload & BookParams>, h: Resp
     const result = await h.prisma.book.update({
       where: {
         id: request.params.bookId,
-      }
-      ,
+      },
       data: request.payload,
     });
 
@@ -366,8 +364,7 @@ async function handler(request: Request<UpdateReviewPayload & ReviewParams>, h: 
     const result = await h.prisma.review.update({
       where: {
         id: request.params.reviewId,
-      }
-      ,
+      },
       data: request.payload,
     });
 

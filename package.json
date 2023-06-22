@@ -7,7 +7,9 @@
     "prisma-joi": "bin/prisma-joi.js"
   },
   "scripts": {
+    "clean": "rm -f lib/*.js lib/util/*.js lib/routes/*.js",
     "lint": "eslint .",
+    "pretest": "npm run clean",
     "test": "tap",
     "posttest": "npm run lint",
     "presnap": "npm run pretest",

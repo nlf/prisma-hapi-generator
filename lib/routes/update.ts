@@ -52,7 +52,7 @@ export function generateUpdateRouteFile (project: Project, model: DMMF.Model, op
             .inlineBlock(() => {
               return writer
                 .write('where:')
-                .block(() => {
+                .inlineBlock(() => {
                   return writer
                     .write(`id: request.params.${camelName}Id,`);
                 })
