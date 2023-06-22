@@ -11,7 +11,7 @@ module.exports = {
     '@typescript-eslint/semi': 'error',
     '@typescript-eslint/member-delimiter-style': 'error',
   },
-  ignorePatterns: ['coverage', 'prisma/client/**/*'],
+  ignorePatterns: ['coverage', 'tap-snapshots'],
   overrides: [{
     files: ['test/**/*'],
     rules: {
