@@ -1,0 +1,42 @@
+datasource db {
+  provider = "sqlite"
+  url = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output = "./lib/client"
+}
+
+generator hapi {
+  provider = "prisma-joi"
+  output = "./lib"
+}
+
+model Book {
+  id        String @id
+  title     String
+  /// just a plain comment
+  /// @joi.max(10)
+  pages     Int?
+  createdAt DateTime
+  banned    Boolean
+  reviews   Review[]
+  authorId  String
+  author    Author @relation(fields: [authorId], references: [id])
+}
+
+model Author {
+  id        String @id
+  firstName String
+  lastName  String
+  books     Book[]
+}
+
+model Review {
+  id     String @id
+  stars  Int
+  bookId String
+  book   Book @relation(fields: [bookId], references: [id])
+}
+

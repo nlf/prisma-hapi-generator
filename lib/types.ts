@@ -1,9 +1,7 @@
-import { relative } from 'node:path';
+import { join, relative } from 'node:path';
+import { type Project, ModuleDeclarationKind } from 'ts-morph';
 
-import type { DMMF } from '@prisma/generator-helper';
-import { type Project, ModuleDeclarationKind, VariableDeclarationKind } from 'ts-morph';
-
-import type { GenerateOptions } from './index';
+import type { GenerateOptions } from './util';
 
 const getIdType = (fieldType: string): string => {
   if (fieldType === 'Boolean') {
@@ -25,8 +23,9 @@ const getIdType = (fieldType: string): string => {
   return 'unknown';
 };
 
-export function generateTypesFile (project: Project, models: DMMF.Model[], options: GenerateOptions) {
-  const typesFile = project.createSourceFile(`${options.config.output}/types.ts`, {}, { overwrite: true });
+export function generateTypesFile (project: Project, options: GenerateOptions) {
+  const typesFilePath = join(options.config.output, 'types.ts');
+  const typesFile = project.createSourceFile(typesFilePath, {}, { overwrite: true });
 
   let clientPath = relative(options.config.output, options.config.clientPath);
   if (!clientPath.startsWith('.')) {
@@ -50,7 +49,18 @@ export function generateTypesFile (project: Project, models: DMMF.Model[], optio
     namespaceImport: 'Hapi',
   });
 
-  for (const model of models) {
+  typesFile.addInterface({
+    name: 'ErrorWithCode',
+    isExported: true,
+    extends: ['Error'],
+    leadingTrivia: (writer) => writer.blankLineIfLastNot(),
+    properties: [{
+      name: 'code',
+      type: 'string',
+    }],
+  });
+
+  for (const model of options.models) {
     // create model payload
     typesFile.addInterface({
       name: `Create${model.name}Payload`,

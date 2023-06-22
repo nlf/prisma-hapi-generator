@@ -1,14 +1,13 @@
-import type { DMMF } from '@prisma/generator-helper';
+import { join } from 'node:path';
 import { type Project, VariableDeclarationKind } from 'ts-morph';
 
-import type { GenerateOptions } from './index';
+import type { GenerateOptions } from './util';
 
-export function generateSchemaFile (project: Project, models: DMMF.Model[], options: GenerateOptions) {
-  // create the file
-  const schemaFile = project.createSourceFile(`${options.config.output}/schemas.ts`, {}, { overwrite: true });
+export function generateSchemasFile (project: Project, options: GenerateOptions) {
+  const schemasFilePath = join(options.config.output, 'schemas.ts');
+  const schemasFile = project.createSourceFile(schemasFilePath, {}, { overwrite: true });
 
-  // add the Joi import
-  schemaFile.addImportDeclaration({
+  schemasFile.addImportDeclaration({
     moduleSpecifier: 'joi',
     defaultImport: 'Joi',
     leadingTrivia: (writer) => {
@@ -18,8 +17,7 @@ export function generateSchemaFile (project: Project, models: DMMF.Model[], opti
     },
   });
 
-  // create the Root schema
-  schemaFile.addVariableStatement({
+  schemasFile.addVariableStatement({
     declarationKind: VariableDeclarationKind.Const,
     isExported: false,
     leadingTrivia: (writer) => writer.blankLineIfLastNot(),
@@ -29,7 +27,7 @@ export function generateSchemaFile (project: Project, models: DMMF.Model[], opti
         return writer
           .write('Joi.object().keys(')
           .inlineBlock(() => {
-            for (const model of models) {
+            for (const model of options.models) {
               writer
                 .write(`${model.name}: Joi.object().keys(`)
                 .inlineBlock(() => {
@@ -114,10 +112,8 @@ export function generateSchemaFile (project: Project, models: DMMF.Model[], opti
     }],
   });
 
-  // now iterate the models and extract the schemas we want
-  for (const model of models) {
-    // first the raw schema for the model
-    schemaFile.addVariableStatement({
+  for (const model of options.models) {
+    schemasFile.addVariableStatement({
       declarationKind: VariableDeclarationKind.Const,
       isExported: true,
       leadingTrivia: (writer) => writer.blankLineIfLastNot(),
@@ -130,8 +126,7 @@ export function generateSchemaFile (project: Project, models: DMMF.Model[], opti
       }],
     });
 
-    // then the Create variant
-    schemaFile.addVariableStatement({
+    schemasFile.addVariableStatement({
       declarationKind: VariableDeclarationKind.Const,
       isExported: true,
       declarations: [{
@@ -143,8 +138,7 @@ export function generateSchemaFile (project: Project, models: DMMF.Model[], opti
       }],
     });
 
-    // and the Update variant
-    schemaFile.addVariableStatement({
+    schemasFile.addVariableStatement({
       declarationKind: VariableDeclarationKind.Const,
       isExported: true,
       declarations: [{
@@ -157,5 +151,5 @@ export function generateSchemaFile (project: Project, models: DMMF.Model[], opti
     });
   }
 
-  schemaFile.formatText(options.formatSettings);
+  schemasFile.formatText(options.formatSettings);
 }
