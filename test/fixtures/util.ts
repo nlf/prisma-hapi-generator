@@ -36,5 +36,5 @@ export const getGeneratorOptions = async (test: Tap.Test) => {
     otherGenerators,
   };
 
-  return { root, options: getOptions(generatorOptions) };
+  return getOptions(generatorOptions);
 };

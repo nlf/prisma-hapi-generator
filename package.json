@@ -35,6 +35,7 @@
   },
   "tap": {
     "coverage": true,
+    "test-env": "NODE_ENV=test",
     "ts": true,
     "files": ["test/**/*.ts"]
   }

@@ -41,6 +41,10 @@ export const getOptions = (options: GeneratorOptions): GenerateOptions => {
     models: options.dmmf.datamodel.models,
   };
 
+  if (process.env.NODE_ENV === 'test') {
+    result.projectSettings.useInMemoryFileSystem = true;
+  }
+
   return result;
 };
 
