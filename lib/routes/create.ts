@@ -20,7 +20,7 @@ export function generateCreateRouteFile (project: Project, model: DMMF.Model, op
   const createFile = project.addSourceFileAtPathIfExists(createFilePath) ?? project.createSourceFile(createFilePath);
 
   ensureNamedImports(createFile, '@hapi/hapi', {
-    types: ['Request', 'ResponseToolkit', 'RouteOptions', 'RouteOptionsValidate', 'Lifecycle'],
+    types: ['Lifecycle', 'Request', 'ResponseToolkit', 'RouteOptions', 'RouteOptionsValidate'],
   });
 
   const relPath = project.createDirectory(options.cwd)

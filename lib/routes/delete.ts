@@ -21,7 +21,7 @@ export function generateDeleteRouteFile (project: Project, model: DMMF.Model, op
   const deleteFile = project.addSourceFileAtPathIfExists(deleteFilePath) ?? project.createSourceFile(deleteFilePath);
 
   ensureNamedImports(deleteFile, '@hapi/hapi', {
-    types: ['Request', 'ResponseToolkit', 'RouteOptions', 'Lifecycle'],
+    types: ['Lifecycle', 'Request', 'ResponseToolkit', 'RouteOptions'],
   });
 
   const relPath = project.createDirectory(options.cwd)

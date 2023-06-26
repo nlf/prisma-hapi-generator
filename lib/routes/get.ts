@@ -21,7 +21,7 @@ export function generateGetRouteFile (project: Project, model: DMMF.Model, optio
   const getFile = project.addSourceFileAtPathIfExists(getFilePath) ?? project.createSourceFile(getFilePath);
 
   ensureNamedImports(getFile, '@hapi/hapi', {
-    types: ['Request', 'ResponseToolkit', 'RouteOptions', 'Lifecycle'],
+    types: ['Lifecycle', 'Request', 'ResponseToolkit', 'RouteOptions'],
   });
 
   const relPath = project.createDirectory(options.cwd)

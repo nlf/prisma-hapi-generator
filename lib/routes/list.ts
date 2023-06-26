@@ -21,7 +21,7 @@ export function generateListRouteFile (project: Project, model: DMMF.Model, opti
   const listFile = project.addSourceFileAtPathIfExists(listFilePath) ?? project.createSourceFile(listFilePath);
 
   ensureNamedImports(listFile, '@hapi/hapi', {
-    types: ['Request', 'ResponseToolkit', 'RouteOptions', 'Lifecycle'],
+    types: ['Lifecycle', 'Request', 'ResponseToolkit', 'RouteOptions'],
   });
 
   ensureFunctionDeclaration(listFile, 'handler', {

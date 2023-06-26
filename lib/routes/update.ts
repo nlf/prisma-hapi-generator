@@ -21,7 +21,7 @@ export function generateUpdateRouteFile (project: Project, model: DMMF.Model, op
   const updateFile = project.addSourceFileAtPathIfExists(updateFilePath) ?? project.createSourceFile(updateFilePath);
 
   ensureNamedImports(updateFile, '@hapi/hapi', {
-    types: ['Request', 'ResponseToolkit', 'RouteOptions', 'RouteOptionsValidate', 'Lifecycle'],
+    types: ['Lifecycle', 'Request', 'ResponseToolkit', 'RouteOptions', 'RouteOptionsValidate'],
   });
 
   const relPath = project.createDirectory(options.cwd)
