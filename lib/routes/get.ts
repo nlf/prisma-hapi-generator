@@ -58,7 +58,7 @@ export function generateGetRouteFile (project: Project, model: DMMF.Model, optio
         .write('if (!result)')
         .block(() => {
           return writer
-            .write('h.response().code(404)');
+            .write('return h.response().code(404)');
         })
         .newLine()
         .newLine()

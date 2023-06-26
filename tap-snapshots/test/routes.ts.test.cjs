@@ -60,7 +60,7 @@ async function handler(request: Request<AuthorParams>, h: ResponseToolkit): Prom
   });
 
   if (!result) {
-    h.response().code(404);
+    return h.response().code(404);
   }
 
   return result;
@@ -188,7 +188,7 @@ async function handler(request: Request<BookParams>, h: ResponseToolkit): Promis
   });
 
   if (!result) {
-    h.response().code(404);
+    return h.response().code(404);
   }
 
   return result;
@@ -359,7 +359,7 @@ async function handler(request: Request<ReviewParams>, h: ResponseToolkit): Prom
   });
 
   if (!result) {
-    h.response().code(404);
+    return h.response().code(404);
   }
 
   return result;
