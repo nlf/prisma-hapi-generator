@@ -13,8 +13,8 @@ import { version } from '../package.json';
 generatorHandler({
   onManifest () {
     return {
-      prettyName: 'Joi Schemas',
-      defaultOutput: 'joi',
+      prettyName: 'hapi server',
+      defaultOutput: '.',
       version: version as string,
     };
   },
