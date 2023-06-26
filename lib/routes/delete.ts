@@ -1,5 +1,6 @@
 import { join } from 'node:path';
 
+import { camelize } from 'inflection';
 import type { DMMF } from '@prisma/generator-helper';
 import {
   StructureKind,
@@ -12,13 +13,13 @@ import {
   ensureFunctionDeclaration,
   ensureNamedImports,
   ensureObjectDeclaration,
-  getCamelName,
   getRelativeImport,
   type HapiGeneratorOptions,
 } from '../util';
 
 export function generateDeleteRouteFile (project: Project, model: DMMF.Model, options: HapiGeneratorOptions) {
-  const deleteFilePath = join(options.paths.routes, getCamelName(model.name), 'delete.ts');
+  const camelName = camelize(model.name, true);
+  const deleteFilePath = join(options.paths.routes, camelName, 'delete.ts');
   const deleteFile = project.addSourceFileAtPathIfExists(deleteFilePath) ?? project.createSourceFile(deleteFilePath);
 
   ensureNamedImports(deleteFile, '@hapi/hapi', {
@@ -40,7 +41,6 @@ export function generateDeleteRouteFile (project: Project, model: DMMF.Model, op
       type: 'ResponseToolkit',
     }],
     statements: (writer: CodeBlockWriter) => {
-      const camelName = getCamelName(model.name);
       return writer
         .write(`await h.prisma.${camelName}.delete(`)
         .inlineBlock(() => {

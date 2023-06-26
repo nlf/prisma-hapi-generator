@@ -1,5 +1,6 @@
 import { join } from 'node:path';
 
+import { camelize } from 'inflection';
 import type { DMMF } from '@prisma/generator-helper';
 import {
   StructureKind,
@@ -12,13 +13,13 @@ import {
   ensureFunctionDeclaration,
   ensureNamedImports,
   ensureObjectDeclaration,
-  getCamelName,
   getRelativeImport,
   type HapiGeneratorOptions,
 } from '../util';
 
 export function generateUpdateRouteFile (project: Project, model: DMMF.Model, options: HapiGeneratorOptions) {
-  const updateFilePath = join(options.paths.routes, getCamelName(model.name), 'update.ts');
+  const camelName = camelize(model.name, true);
+  const updateFilePath = join(options.paths.routes, camelName, 'update.ts');
   const updateFile = project.addSourceFileAtPathIfExists(updateFilePath) ?? project.createSourceFile(updateFilePath);
 
   ensureNamedImports(updateFile, '@hapi/hapi', {
@@ -44,7 +45,6 @@ export function generateUpdateRouteFile (project: Project, model: DMMF.Model, op
       type: 'ResponseToolkit',
     }],
     statements: (writer: CodeBlockWriter) => {
-      const camelName = getCamelName(model.name);
       return writer
         .write('try')
         .block(() => {

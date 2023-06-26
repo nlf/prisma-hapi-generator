@@ -1,9 +1,9 @@
 import { Project } from 'ts-morph';
+import { camelize } from 'inflection';
 import t from 'tap';
 
 import { getGeneratorOptions } from './fixtures/util';
 import { generateRouteFiles } from '../lib/routes';
-import { getCamelName } from '../lib/util';
 
 void t.test('generates routes', async (t) => {
   const options = await getGeneratorOptions(t);
@@ -14,7 +14,7 @@ void t.test('generates routes', async (t) => {
 
   for (const model of options.models) {
     for (const file of ['create', 'delete', 'get', 'index', 'list', 'update']) {
-      const filePath = `/lib/routes/${getCamelName(model.name)}/${file}.ts`;
+      const filePath = `/lib/routes/${camelize(model.name, true)}/${file}.ts`;
       const routeFile = project.getSourceFileOrThrow(filePath);
       t.matchSnapshot(routeFile.getFullText(), filePath);
     }

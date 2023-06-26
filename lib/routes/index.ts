@@ -1,4 +1,5 @@
 import { join } from 'path';
+import { camelize } from 'inflection';
 import type { Project } from 'ts-morph';
 
 import { generateCreateRouteFile } from './create';
@@ -11,7 +12,6 @@ import {
   ensureDefaultExport,
   ensureNamedExports,
   ensureNamedImports,
-  getCamelName,
   type HapiGeneratorOptions,
 } from '../util';
 
@@ -28,7 +28,7 @@ export function generateRouteFiles (project: Project, options: HapiGeneratorOpti
 
   for (const model of options.models) {
     const routeTable = [];
-    const camelName = getCamelName(model.name);
+    const camelName = camelize(model.name, true);
     const indexSpecifier = `./${camelName}`;
 
     const modelDirPath = join(options.paths.routes, camelName);

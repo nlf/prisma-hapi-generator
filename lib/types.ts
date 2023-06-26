@@ -1,7 +1,7 @@
+import { camelize } from 'inflection';
 import { type Project, ModuleDeclarationKind } from 'ts-morph';
 
 import {
-  getCamelName,
   getRelativeImport,
   type HapiGeneratorOptions,
 } from './util';
@@ -81,7 +81,7 @@ export function generateTypesFile (project: Project, options: HapiGeneratorOptio
     typesFile.addInterface({
       name: `${model.name}IdParam`,
       properties: [{
-        name: `${getCamelName(model.name)}Id`,
+        name: `${camelize(model.name, true)}Id`,
         // coverage disabled on the null coalescing because it shouldn't be possible
         type: getIdType(idField?.type ?? /* istanbul ignore next */ 'unknown'),
       }],

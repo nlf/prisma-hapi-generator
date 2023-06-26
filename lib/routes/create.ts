@@ -1,4 +1,5 @@
 import { join } from 'node:path';
+import { camelize } from 'inflection';
 import type { DMMF } from '@prisma/generator-helper';
 import {
   StructureKind,
@@ -11,13 +12,13 @@ import {
   ensureFunctionDeclaration,
   ensureNamedImports,
   ensureObjectDeclaration,
-  getCamelName,
   getRelativeImport,
   type HapiGeneratorOptions,
 } from '../util';
 
 export function generateCreateRouteFile (project: Project, model: DMMF.Model, options: HapiGeneratorOptions) {
-  const createFilePath = join(options.paths.routes, getCamelName(model.name), 'create.ts');
+  const camelName = camelize(model.name, true);
+  const createFilePath = join(options.paths.routes, camelName, 'create.ts');
   const createFile = project.addSourceFileAtPathIfExists(createFilePath) ?? project.createSourceFile(createFilePath);
 
   ensureNamedImports(createFile, '@hapi/hapi', {
@@ -43,7 +44,6 @@ export function generateCreateRouteFile (project: Project, model: DMMF.Model, op
       type: 'ResponseToolkit',
     }],
     statements: (writer: CodeBlockWriter) => {
-      const camelName = getCamelName(model.name);
       return writer
         .write(`const result = await h.prisma.${camelName}.create({ data: request.payload })`)
         .newLine()
