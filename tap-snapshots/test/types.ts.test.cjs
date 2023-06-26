@@ -15,22 +15,6 @@ export interface ErrorWithCode extends Error {
   code: string;
 }
 
-export interface CreateBookPayload extends Hapi.ReqRefDefaults {
-  Payload: Prisma.BookCreateInput;
-}
-
-export interface UpdateBookPayload extends Hapi.ReqRefDefaults {
-  Payload: Prisma.BookUpdateInput;
-}
-
-interface BookIdParam {
-  bookId: string;
-}
-
-export interface BookParams extends Hapi.ReqRefDefaults {
-  Params: BookIdParam;
-}
-
 export interface CreateAuthorPayload extends Hapi.ReqRefDefaults {
   Payload: Prisma.AuthorCreateInput;
 }
@@ -45,6 +29,22 @@ interface AuthorIdParam {
 
 export interface AuthorParams extends Hapi.ReqRefDefaults {
   Params: AuthorIdParam;
+}
+
+export interface CreateBookPayload extends Hapi.ReqRefDefaults {
+  Payload: Prisma.BookCreateInput;
+}
+
+export interface UpdateBookPayload extends Hapi.ReqRefDefaults {
+  Payload: Prisma.BookUpdateInput;
+}
+
+interface BookIdParam {
+  bookId: string;
+}
+
+export interface BookParams extends Hapi.ReqRefDefaults {
+  Params: BookIdParam;
 }
 
 export interface CreateReviewPayload extends Hapi.ReqRefDefaults {

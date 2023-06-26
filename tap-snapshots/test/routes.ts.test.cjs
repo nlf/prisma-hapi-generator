@@ -255,18 +255,9 @@ export const UpdateBook: RouteOptions = {
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/index.ts 1`] = `
 import type { ServerRoute } from '@hapi/hapi';
-import { CreateBook, DeleteBook, GetBook, ListBook, UpdateBook } from './book';
 import { CreateAuthor, DeleteAuthor, GetAuthor, ListAuthor, UpdateAuthor } from './author';
+import { CreateBook, DeleteBook, GetBook, ListBook, UpdateBook } from './book';
 import { CreateReview, DeleteReview, GetReview, ListReview, UpdateReview } from './review';
-
-// DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
-const bookRoutes: ServerRoute[] = [
-  { method: 'POST', path: '/book', options: CreateBook },
-  { method: 'DELETE', path: '/book/{bookId}', options: DeleteBook },
-  { method: 'GET', path: '/book/{bookId}', options: GetBook },
-  { method: 'GET', path: '/book', options: ListBook },
-  { method: 'PUT', path: '/book/{bookId}', options: UpdateBook },
-];
 
 // DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
 const authorRoutes: ServerRoute[] = [
@@ -275,6 +266,15 @@ const authorRoutes: ServerRoute[] = [
   { method: 'GET', path: '/author/{authorId}', options: GetAuthor },
   { method: 'GET', path: '/author', options: ListAuthor },
   { method: 'PUT', path: '/author/{authorId}', options: UpdateAuthor },
+];
+
+// DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
+const bookRoutes: ServerRoute[] = [
+  { method: 'POST', path: '/book', options: CreateBook },
+  { method: 'DELETE', path: '/book/{bookId}', options: DeleteBook },
+  { method: 'GET', path: '/book/{bookId}', options: GetBook },
+  { method: 'GET', path: '/book', options: ListBook },
+  { method: 'PUT', path: '/book/{bookId}', options: UpdateBook },
 ];
 
 // DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
@@ -287,8 +287,8 @@ const reviewRoutes: ServerRoute[] = [
 ];
 
 const routes: ServerRoute[] = [
-  ...bookRoutes,
   ...authorRoutes,
+  ...bookRoutes,
   ...reviewRoutes,
 ];
 

@@ -11,6 +11,19 @@ exports[`test/schemas.ts TAP generates schemas > /lib/schemas.ts 1`] = `
 import Joi from 'joi';
 
 const Root = Joi.object().keys({
+  Author: Joi.object().keys({
+    id: Joi.number().alter({
+      create: (schema) => schema.forbidden(),
+      update: (schema) => schema.valid(Joi.ref('$params.authorId')).strip(),
+    }),
+    firstName: Joi.string().alter({
+      create: (schema) => schema.required(),
+    }),
+    lastName: Joi.string().alter({
+      create: (schema) => schema.required(),
+    }),
+    books: Joi.array().items(Joi.link('/Book')),
+  }),
   Book: Joi.object().keys({
     id: Joi.string().alter({
       create: (schema) => schema.forbidden(),
@@ -37,19 +50,6 @@ const Root = Joi.object().keys({
     }),
     author: Joi.link('/Author'),
   }),
-  Author: Joi.object().keys({
-    id: Joi.number().alter({
-      create: (schema) => schema.forbidden(),
-      update: (schema) => schema.valid(Joi.ref('$params.authorId')).strip(),
-    }),
-    firstName: Joi.string().alter({
-      create: (schema) => schema.required(),
-    }),
-    lastName: Joi.string().alter({
-      create: (schema) => schema.required(),
-    }),
-    books: Joi.array().items(Joi.link('/Book')),
-  }),
   Review: Joi.object().keys({
     id: Joi.string().alter({
       create: (schema) => schema.forbidden(),
@@ -65,13 +65,13 @@ const Root = Joi.object().keys({
   }),
 });
 
-export const Book = Root.extract('Book');
-export const CreateBook = Book.tailor('create');
-export const UpdateBook = Book.tailor('update');
-
 export const Author = Root.extract('Author');
 export const CreateAuthor = Author.tailor('create');
 export const UpdateAuthor = Author.tailor('update');
+
+export const Book = Root.extract('Book');
+export const CreateBook = Book.tailor('create');
+export const UpdateBook = Book.tailor('update');
 
 export const Review = Root.extract('Review');
 export const CreateReview = Review.tailor('create');
