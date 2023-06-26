@@ -7,6 +7,9 @@ export const generateExportFile = (project: Project, options: GenerateOptions) =
   const exportFilePath = join(options.config.output, 'index.ts');
   const exportFile = project.createSourceFile(exportFilePath, {}, { overwrite: true });
 
+  const clientPath = project.createDirectory(options.config.output)
+    .getRelativePathAsModuleSpecifierTo(options.config.clientPath);
+
   exportFile.addExportDeclaration({
     leadingTrivia: (writer) => {
       return writer
@@ -19,7 +22,7 @@ export const generateExportFile = (project: Project, options: GenerateOptions) =
       'PrismaClient',
       ...options.models.map((model) => model.name),
     ],
-    moduleSpecifier: './client',
+    moduleSpecifier: clientPath,
   });
 
   exportFile.addExportDeclaration({
