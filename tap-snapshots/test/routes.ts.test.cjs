@@ -54,7 +54,7 @@ async function handler(request: Request<AuthorParams>, h: ResponseToolkit): Prom
   const result = await h.prisma.author.findUnique({
     where: {
       id: request.params.authorId,
-    }
+    },
   });
 
   if (!result) {
@@ -178,7 +178,7 @@ async function handler(request: Request<BookParams>, h: ResponseToolkit): Promis
   const result = await h.prisma.book.findUnique({
     where: {
       id: request.params.bookId,
-    }
+    },
   });
 
   if (!result) {
@@ -343,7 +343,7 @@ async function handler(request: Request<ReviewParams>, h: ResponseToolkit): Prom
   const result = await h.prisma.review.findUnique({
     where: {
       id: request.params.reviewId,
-    }
+    },
   });
 
   if (!result) {

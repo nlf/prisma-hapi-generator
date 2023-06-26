@@ -48,10 +48,11 @@ export function generateGetRouteFile (project: Project, model: DMMF.Model, optio
         .inlineBlock(() => {
           return writer
             .write('where:')
-            .block(() => {
+            .inlineBlock(() => {
               return writer
                 .write(`id: request.params.${camelName}Id,`);
-            });
+            })
+            .write(',');
         })
         .write(')')
         .newLine()
