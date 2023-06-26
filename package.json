@@ -25,6 +25,7 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/generator-helper": "^4.15.0",
+    "inflection": "^2.0.1",
     "ts-morph": "^18.0.0",
     "typescript": "~5.0.3"
   },
@@ -36,7 +37,6 @@
     "@typescript-eslint/eslint-plugin": "^5.59.9",
     "@typescript-eslint/parser": "^5.59.9",
     "eslint": "^8.42.0",
-    "inflection": "^2.0.1",
     "prisma": "^4.16.0",
     "tap": "^16.3.6",
     "ts-node": "^10.9.1"
