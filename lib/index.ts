@@ -14,7 +14,7 @@ generatorHandler({
   onManifest () {
     return {
       prettyName: 'hapi server',
-      defaultOutput: '.',
+      defaultOutput: './',
       version: version as string,
     };
   },
