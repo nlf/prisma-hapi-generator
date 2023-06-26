@@ -3,7 +3,7 @@ import { Project } from 'ts-morph';
 
 import type { GenerateOptions } from './util';
 
-export const generateExportFile = (project: Project, options: GenerateOptions) => {
+export function generatePluginFile (project: Project, options: GenerateOptions) {
   const exportFilePath = join(options.config.output, 'index.ts');
   const exportFile = project.createSourceFile(exportFilePath, {}, { overwrite: true });
 
@@ -36,4 +36,4 @@ export const generateExportFile = (project: Project, options: GenerateOptions) =
   });
 
   exportFile.formatText(options.formatSettings);
-};
+}
