@@ -6,7 +6,7 @@ import { generateDeleteRouteFile } from './delete';
 import { generateGetRouteFile } from './get';
 import { generateListRouteFile } from './list';
 import { generateUpdateRouteFile } from './update';
-import { ensureArrayDeclaration, ensureNamedExports, ensureNamedImports, getCamelName, type GenerateOptions } from '../util';
+import { ensureArrayDeclaration, ensureDefaultExport, ensureNamedExports, ensureNamedImports, getCamelName, type GenerateOptions } from '../util';
 
 export function generateRouteFiles (project: Project, options: GenerateOptions) {
   const routesPath = join(options.config.output, 'routes');
@@ -80,7 +80,6 @@ export function generateRouteFiles (project: Project, options: GenerateOptions) 
   }
 
   ensureArrayDeclaration(indexFile, 'routes', {
-    isExported: true,
     elements: rootRouteTable,
     leadingTrivia: (writer) => {
       return writer
@@ -88,6 +87,8 @@ export function generateRouteFiles (project: Project, options: GenerateOptions) 
     },
     type: 'ServerRoute[]',
   });
+
+  ensureDefaultExport(indexFile, 'routes');
 
   indexFile.formatText(options.formatSettings);
 }

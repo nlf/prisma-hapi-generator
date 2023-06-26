@@ -286,11 +286,13 @@ const reviewRoutes: ServerRoute[] = [
   { method: 'PUT', path: '/review/{reviewId}', options: UpdateReview },
 ];
 
-export const routes: ServerRoute[] = [
+const routes: ServerRoute[] = [
   ...bookRoutes,
   ...authorRoutes,
   ...reviewRoutes,
 ];
+
+export default routes;
 
 `
 

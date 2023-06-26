@@ -1,5 +1,19 @@
 import type { SourceFile } from 'ts-morph';
 
+export const ensureDefaultExport = (sourceFile: SourceFile, variableName: string) => {
+  const currentDefault = sourceFile.getExportAssignment((x) => !x.isExportEquals());
+  if (!currentDefault) {
+    sourceFile.addExportAssignment({
+      isExportEquals: false,
+      expression: variableName,
+    });
+
+    return;
+  }
+
+  currentDefault.setExpression(variableName);
+};
+
 interface EnsureNamedExportsOptions {
   named?: string[];
   types?: string[];

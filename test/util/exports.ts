@@ -1,7 +1,31 @@
-import { ensureNamedExports } from '../../lib/util/exports';
+import { ensureDefaultExport, ensureNamedExports } from '../../lib/util/exports';
 
 import { Project } from 'ts-morph';
 import t from 'tap';
+
+void t.test('ensureDefaultExport', (t) => {
+  void t.test('adds default export if none exists', (t) => {
+    const project = new Project();
+    const testFile = project.createSourceFile('test.ts', '');
+
+    ensureDefaultExport(testFile, 'foo');
+    t.equal(testFile.print(), 'export default foo;\n');
+
+    t.end();
+  });
+
+  void t.test('modifies existing default export if found', (t) => {
+    const project = new Project();
+    const testFile = project.createSourceFile('test.ts', 'export default bar;');
+
+    ensureDefaultExport(testFile, 'foo');
+    t.equal(testFile.print(), 'export default foo;\n');
+
+    t.end();
+  });
+
+  t.end();
+});
 
 void t.test('ensureNamedExports', (t) => {
   void t.test('adds named export if none exist', (t) => {
