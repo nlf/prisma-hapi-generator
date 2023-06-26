@@ -9,7 +9,7 @@ generator client {
 }
 
 generator hapi {
-  provider = "prisma-joi"
+  provider = "prisma-hapi-generator"
   output = "./lib"
 }
 

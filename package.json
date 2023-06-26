@@ -1,10 +1,10 @@
 {
-  "name": "prisma-joi",
+  "name": "prisma-hapi-generator",
   "version": "1.0.0",
   "description": "",
   "main": "lib/index.js",
   "bin": {
-    "prisma-joi": "bin/prisma-joi.js"
+    "prisma-hapi-generator": "bin/prisma-hapi-generator"
   },
   "scripts": {
     "clean": "rm -f lib/*.js lib/util/*.js lib/routes/*.js",

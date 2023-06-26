@@ -21,8 +21,8 @@ export const getGeneratorOptions = async (test: Tap.Test) => {
     datamodelPath: `${root}/schema.prisma`,
   });
 
-  const generator = generatorConfig.generators.find((g) => g.provider.value === 'prisma-joi');
-  const otherGenerators = generatorConfig.generators.filter((g) => g.provider.value !== 'prisma-joi');
+  const generator = generatorConfig.generators.find((g) => g.provider.value === 'prisma-hapi-generator');
+  const otherGenerators = generatorConfig.generators.filter((g) => g.provider.value !== 'prisma-hapi-generator');
 
   const generatorOptions: GeneratorOptions = {
     datamodel: schemaFixture,

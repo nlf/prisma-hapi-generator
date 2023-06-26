@@ -1,13 +1,12 @@
-## prisma-joi
+## prisma-hapi-generator
 
-This is a generator for [prisma]() that outputs Joi schemas for each of your models.
+This is a generator for [prisma](https://prisma.io) that outputs most of the pieces necessary for a running [hapi](https://hapi.dev) server.
 
 
 ### Usage
 
 ```prisma
-generator joi {
-  provider = "prisma-joi"
-  output = "./schema.ts"
+generator hapi {
+  provider = "prisma-hapi-generator"
 }
 ```
