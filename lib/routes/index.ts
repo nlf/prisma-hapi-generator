@@ -1,5 +1,5 @@
 import { join } from 'path';
-import { camelize } from 'inflection';
+import { camelize, pluralize } from 'inflection';
 import type { Project } from 'ts-morph';
 
 import { generateCreateRouteFile } from './create';
@@ -29,6 +29,7 @@ export function generateRouteFiles (project: Project, options: HapiGeneratorOpti
   for (const model of options.models) {
     const routeTable = [];
     const camelName = camelize(model.name, true);
+    const pathName = pluralize(camelName);
     const indexSpecifier = `./${camelName}`;
 
     const modelDirPath = join(options.paths.routes, camelName);
@@ -41,31 +42,31 @@ export function generateRouteFiles (project: Project, options: HapiGeneratorOpti
     const createImportName = `Create${model.name}Route`;
     ensureNamedImports(indexFile, indexSpecifier, { named: [createImportName] });
     ensureNamedExports(modelIndexFile, './create', { named: [createImportName] });
-    routeTable.push(`{ method: 'POST', path: '/${camelName}', options: ${createImportName} }`);
+    routeTable.push(`{ method: 'POST', path: '/${pathName}', options: ${createImportName} }`);
 
     generateDeleteRouteFile(project, model, options);
     const deleteImportName = `Delete${model.name}Route`;
     ensureNamedImports(indexFile, indexSpecifier, { named: [deleteImportName] });
     ensureNamedExports(modelIndexFile, './delete', { named: [deleteImportName] });
-    routeTable.push(`{ method: 'DELETE', path: '/${camelName}/{${camelName}Id}', options: ${deleteImportName} }`);
+    routeTable.push(`{ method: 'DELETE', path: '/${pathName}/{${camelName}Id}', options: ${deleteImportName} }`);
 
     generateGetRouteFile(project, model, options);
     const getImportName = `Get${model.name}Route`;
     ensureNamedImports(indexFile, indexSpecifier, { named: [getImportName] });
     ensureNamedExports(modelIndexFile, './get', { named: [getImportName] });
-    routeTable.push(`{ method: 'GET', path: '/${camelName}/{${camelName}Id}', options: ${getImportName} }`);
+    routeTable.push(`{ method: 'GET', path: '/${pathName}/{${camelName}Id}', options: ${getImportName} }`);
 
     generateListRouteFile(project, model, options);
     const listImportName = `List${model.name}Route`;
     ensureNamedImports(indexFile, indexSpecifier, { named: [listImportName] });
     ensureNamedExports(modelIndexFile, './list', { named: [listImportName] });
-    routeTable.push(`{ method: 'GET', path: '/${camelName}', options: ${listImportName} }`);
+    routeTable.push(`{ method: 'GET', path: '/${pathName}', options: ${listImportName} }`);
 
     generateUpdateRouteFile(project, model, options);
     const updateImportName = `Update${model.name}Route`;
     ensureNamedImports(indexFile, indexSpecifier, { named: [updateImportName] });
     ensureNamedExports(modelIndexFile, './update', { named: [updateImportName] });
-    routeTable.push(`{ method: 'PUT', path: '/${camelName}/{${camelName}Id}', options: ${updateImportName} }`);
+    routeTable.push(`{ method: 'PUT', path: '/${pathName}/{${camelName}Id}', options: ${updateImportName} }`);
 
     ensureArrayDeclaration(indexFile, `${camelName}Routes`, {
       leadingTrivia: (writer) => {
