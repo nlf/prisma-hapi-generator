@@ -31,7 +31,7 @@ interface EnsureObjectDeclarationOptions extends EnsureVariableOptions {
   properties?: Record<string, PropertyInitializer>;
 }
 
-export const ensureObjectDeclaration = (sourceFile: SourceFile, variableName: string, options: EnsureObjectDeclarationOptions) => {
+export function ensureObjectDeclaration (sourceFile: SourceFile, variableName: string, options: EnsureObjectDeclarationOptions) {
   const objectStatement = ensureStatement(sourceFile, variableName, options);
   const objectDeclaration = declarationFromStatement(objectStatement, variableName);
 
@@ -64,7 +64,7 @@ export const ensureObjectDeclaration = (sourceFile: SourceFile, variableName: st
         objectInitializer.addShorthandPropertyAssignment({ name: propName });
       }
 
-      return;
+      continue;
     }
 
     const existingStructure = existingProperty.getStructure();
@@ -86,13 +86,13 @@ export const ensureObjectDeclaration = (sourceFile: SourceFile, variableName: st
       }
     }
   }
-};
+}
 
 interface EnsureArrayDeclarationOptions extends EnsureVariableOptions {
   elements?: string[];
 }
 
-export const ensureArrayDeclaration = (sourceFile: SourceFile, variableName: string, options: EnsureArrayDeclarationOptions) => {
+export function ensureArrayDeclaration (sourceFile: SourceFile, variableName: string, options: EnsureArrayDeclarationOptions) {
   const arrayStatement = ensureStatement(sourceFile, variableName, options);
   const arrayDeclaration = declarationFromStatement(arrayStatement, variableName);
 
@@ -112,9 +112,9 @@ export const ensureArrayDeclaration = (sourceFile: SourceFile, variableName: str
   }
 
   return;
-};
+}
 
-const ensureStatement = (sourceFile: SourceFile, variableName: string, options: EnsureVariableOptions) => {
+function ensureStatement (sourceFile: SourceFile, variableName: string, options: EnsureVariableOptions) {
   const leadingTrivia = options.leadingTrivia ?? '';
   const variableStatement = sourceFile.getVariableStatement(variableName)
     ?? sourceFile.addVariableStatement({ leadingTrivia, declarations: [{ name: variableName, type: options.type }] });
@@ -131,9 +131,9 @@ const ensureStatement = (sourceFile: SourceFile, variableName: string, options: 
   }
 
   return variableStatement;
-};
+}
 
-const declarationFromStatement = (statement: VariableStatement, variableName: string) => {
+function declarationFromStatement (statement: VariableStatement, variableName: string) {
   const variableDeclaration = statement.getDeclarations().find((declaration) => {
     return declaration.getName() === variableName;
   });
@@ -144,4 +144,4 @@ const declarationFromStatement = (statement: VariableStatement, variableName: st
   }
 
   return variableDeclaration;
-};
+}

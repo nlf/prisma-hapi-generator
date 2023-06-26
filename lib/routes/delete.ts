@@ -13,21 +13,19 @@ import {
   ensureNamedImports,
   ensureObjectDeclaration,
   getCamelName,
-  type GenerateOptions,
+  getRelativeImport,
+  type HapiGeneratorOptions,
 } from '../util';
 
-export function generateDeleteRouteFile (project: Project, model: DMMF.Model, options: GenerateOptions) {
-  const deleteFilePath = join(options.cwd, 'delete.ts');
+export function generateDeleteRouteFile (project: Project, model: DMMF.Model, options: HapiGeneratorOptions) {
+  const deleteFilePath = join(options.paths.routes, getCamelName(model.name), 'delete.ts');
   const deleteFile = project.addSourceFileAtPathIfExists(deleteFilePath) ?? project.createSourceFile(deleteFilePath);
 
   ensureNamedImports(deleteFile, '@hapi/hapi', {
     types: ['Lifecycle', 'Request', 'ResponseToolkit', 'RouteOptions'],
   });
 
-  const relPath = project.createDirectory(options.cwd)
-    .getRelativePathAsModuleSpecifierTo(options.config.output);
-
-  ensureNamedImports(deleteFile, relPath, {
+  ensureNamedImports(deleteFile, getRelativeImport(deleteFilePath, options.paths.types), {
     types: [`${model.name}Params`],
   });
 
@@ -63,7 +61,7 @@ export function generateDeleteRouteFile (project: Project, model: DMMF.Model, op
 
   // TODO validate route parameters?
 
-  ensureObjectDeclaration(deleteFile, `Delete${model.name}`, {
+  ensureObjectDeclaration(deleteFile, `Delete${model.name}Route`, {
     type: 'RouteOptions',
     declarationKind: VariableDeclarationKind.Const,
     isExported: true,

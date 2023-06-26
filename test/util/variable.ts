@@ -71,7 +71,7 @@ void t.test('ensureObjectDeclaration', (t) => {
     t.end();
   });
 
-  void t.test('adds an object with a shorthand property', (t) => {
+  void t.test('adds an object with shorthand properties', (t) => {
     const project = new Project();
     const testFile = project.createSourceFile('test.ts', '');
 
@@ -80,9 +80,12 @@ void t.test('ensureObjectDeclaration', (t) => {
         bar: {
           kind: StructureKind.ShorthandPropertyAssignment,
         },
+        baz: {
+          kind: StructureKind.ShorthandPropertyAssignment,
+        },
       },
     });
-    t.equal(testFile.print(), 'const foo = {\n    bar\n};\n');
+    t.equal(testFile.print(), 'const foo = {\n    bar,\n    baz\n};\n');
 
     t.end();
   });

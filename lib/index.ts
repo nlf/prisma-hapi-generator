@@ -1,7 +1,6 @@
 import { generatorHandler } from '@prisma/generator-helper';
 import { Project } from 'ts-morph';
 
-import { generateExportFile } from './export';
 import { generateRouteFiles } from './routes';
 import { generateSchemasFile } from './schemas';
 import { generateTypesFile } from './types';
@@ -24,7 +23,6 @@ generatorHandler({
 
     generateSchemasFile(project, options);
     generateTypesFile(project, options);
-    generateExportFile(project, options);
     generateRouteFiles(project, options);
 
     return await project.save();

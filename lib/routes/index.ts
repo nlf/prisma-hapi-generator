@@ -6,13 +6,19 @@ import { generateDeleteRouteFile } from './delete';
 import { generateGetRouteFile } from './get';
 import { generateListRouteFile } from './list';
 import { generateUpdateRouteFile } from './update';
-import { ensureArrayDeclaration, ensureDefaultExport, ensureNamedExports, ensureNamedImports, getCamelName, type GenerateOptions } from '../util';
+import {
+  ensureArrayDeclaration,
+  ensureDefaultExport,
+  ensureNamedExports,
+  ensureNamedImports,
+  getCamelName,
+  type HapiGeneratorOptions,
+} from '../util';
 
-export function generateRouteFiles (project: Project, options: GenerateOptions) {
-  const routesPath = join(options.config.output, 'routes');
-  project.createDirectory(routesPath);
+export function generateRouteFiles (project: Project, options: HapiGeneratorOptions) {
+  project.createDirectory(options.paths.routes);
 
-  const indexFilePath = join(routesPath, 'index.ts');
+  const indexFilePath = join(options.paths.routes, 'index.ts');
   const indexFile = project.addSourceFileAtPathIfExists(indexFilePath) ?? project.createSourceFile(indexFilePath);
   ensureNamedImports(indexFile, '@hapi/hapi', {
     types: ['ServerRoute'],
@@ -25,40 +31,38 @@ export function generateRouteFiles (project: Project, options: GenerateOptions) 
     const camelName = getCamelName(model.name);
     const indexSpecifier = `./${camelName}`;
 
-    const modelDirPath = join(routesPath, camelName);
+    const modelDirPath = join(options.paths.routes, camelName);
     project.createDirectory(modelDirPath);
 
     const modelIndexFilePath = join(modelDirPath, 'index.ts');
     const modelIndexFile = project.addSourceFileAtPathIfExists(modelIndexFilePath) ?? project.createSourceFile(modelIndexFilePath);
 
-    const modelOptions = { ...options, cwd: modelDirPath };
-
-    generateCreateRouteFile(project, model, modelOptions);
-    const createImportName = `Create${model.name}`;
+    generateCreateRouteFile(project, model, options);
+    const createImportName = `Create${model.name}Route`;
     ensureNamedImports(indexFile, indexSpecifier, { named: [createImportName] });
     ensureNamedExports(modelIndexFile, './create', { named: [createImportName] });
     routeTable.push(`{ method: 'POST', path: '/${camelName}', options: ${createImportName} }`);
 
-    generateDeleteRouteFile(project, model, modelOptions);
-    const deleteImportName = `Delete${model.name}`;
+    generateDeleteRouteFile(project, model, options);
+    const deleteImportName = `Delete${model.name}Route`;
     ensureNamedImports(indexFile, indexSpecifier, { named: [deleteImportName] });
     ensureNamedExports(modelIndexFile, './delete', { named: [deleteImportName] });
     routeTable.push(`{ method: 'DELETE', path: '/${camelName}/{${camelName}Id}', options: ${deleteImportName} }`);
 
-    generateGetRouteFile(project, model, modelOptions);
-    const getImportName = `Get${model.name}`;
+    generateGetRouteFile(project, model, options);
+    const getImportName = `Get${model.name}Route`;
     ensureNamedImports(indexFile, indexSpecifier, { named: [getImportName] });
     ensureNamedExports(modelIndexFile, './get', { named: [getImportName] });
     routeTable.push(`{ method: 'GET', path: '/${camelName}/{${camelName}Id}', options: ${getImportName} }`);
 
-    generateListRouteFile(project, model, modelOptions);
-    const listImportName = `List${model.name}`;
+    generateListRouteFile(project, model, options);
+    const listImportName = `List${model.name}Route`;
     ensureNamedImports(indexFile, indexSpecifier, { named: [listImportName] });
     ensureNamedExports(modelIndexFile, './list', { named: [listImportName] });
     routeTable.push(`{ method: 'GET', path: '/${camelName}', options: ${listImportName} }`);
 
-    generateUpdateRouteFile(project, model, modelOptions);
-    const updateImportName = `Update${model.name}`;
+    generateUpdateRouteFile(project, model, options);
+    const updateImportName = `Update${model.name}Route`;
     ensureNamedImports(indexFile, indexSpecifier, { named: [updateImportName] });
     ensureNamedExports(modelIndexFile, './update', { named: [updateImportName] });
     routeTable.push(`{ method: 'PUT', path: '/${camelName}/{${camelName}Id}', options: ${updateImportName} }`);
@@ -74,7 +78,7 @@ export function generateRouteFiles (project: Project, options: GenerateOptions) 
       type: 'ServerRoute[]',
     });
 
-    modelIndexFile.formatText(modelOptions.formatSettings);
+    modelIndexFile.formatText(options.formatSettings);
 
     rootRouteTable.push(`...${camelName}Routes`);
   }

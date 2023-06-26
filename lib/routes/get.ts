@@ -13,21 +13,19 @@ import {
   ensureNamedImports,
   ensureObjectDeclaration,
   getCamelName,
-  type GenerateOptions,
+  getRelativeImport,
+  type HapiGeneratorOptions,
 } from '../util';
 
-export function generateGetRouteFile (project: Project, model: DMMF.Model, options: GenerateOptions) {
-  const getFilePath = join(options.cwd, 'get.ts');
+export function generateGetRouteFile (project: Project, model: DMMF.Model, options: HapiGeneratorOptions) {
+  const getFilePath = join(options.paths.routes, getCamelName(model.name), 'get.ts');
   const getFile = project.addSourceFileAtPathIfExists(getFilePath) ?? project.createSourceFile(getFilePath);
 
   ensureNamedImports(getFile, '@hapi/hapi', {
     types: ['Lifecycle', 'Request', 'ResponseToolkit', 'RouteOptions'],
   });
 
-  const relPath = project.createDirectory(options.cwd)
-    .getRelativePathAsModuleSpecifierTo(options.config.output);
-
-  ensureNamedImports(getFile, relPath, {
+  ensureNamedImports(getFile, getRelativeImport(getFilePath, options.paths.types), {
     types: [`${model.name}Params`],
   });
 
@@ -70,7 +68,7 @@ export function generateGetRouteFile (project: Project, model: DMMF.Model, optio
 
   // TODO: route parameter validation?
 
-  ensureObjectDeclaration(getFile, `Get${model.name}`, {
+  ensureObjectDeclaration(getFile, `Get${model.name}Route`, {
     type: 'RouteOptions',
     declarationKind: VariableDeclarationKind.Const,
     isExported: true,

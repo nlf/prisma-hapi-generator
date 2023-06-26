@@ -1,18 +1,16 @@
-import { join } from 'node:path';
 import { type Project, VariableDeclarationKind } from 'ts-morph';
 
-import type { GenerateOptions } from './util';
+import type { HapiGeneratorOptions } from './util';
 
-export function generateSchemasFile (project: Project, options: GenerateOptions) {
-  const schemasFilePath = join(options.config.output, 'schemas.ts');
-  const schemasFile = project.createSourceFile(schemasFilePath, {}, { overwrite: true });
+export function generateSchemasFile (project: Project, options: HapiGeneratorOptions) {
+  const schemasFile = project.createSourceFile(options.paths.schemas, {}, { overwrite: true });
 
   schemasFile.addImportDeclaration({
     moduleSpecifier: 'joi',
     defaultImport: 'Joi',
     leadingTrivia: (writer) => {
       return writer
-        .write(options.fileHeader)
+        .write(options.headers.file)
         .newLine()
         .newLine();
     },
@@ -121,7 +119,7 @@ export function generateSchemasFile (project: Project, options: GenerateOptions)
       isExported: true,
       leadingTrivia: (writer) => writer.blankLineIfLastNot(),
       declarations: [{
-        name: model.name,
+        name: `${model.name}Schema`,
         initializer: (writer) => {
           return writer
             .write(`Root.extract('${model.name}')`);
@@ -133,10 +131,10 @@ export function generateSchemasFile (project: Project, options: GenerateOptions)
       declarationKind: VariableDeclarationKind.Const,
       isExported: true,
       declarations: [{
-        name: `Create${model.name}`,
+        name: `Create${model.name}Schema`,
         initializer: (writer) => {
           return writer
-            .write(`${model.name}.tailor('create')`);
+            .write(`${model.name}Schema.tailor('create')`);
         },
       }],
     });
@@ -145,10 +143,10 @@ export function generateSchemasFile (project: Project, options: GenerateOptions)
       declarationKind: VariableDeclarationKind.Const,
       isExported: true,
       declarations: [{
-        name: `Update${model.name}`,
+        name: `Update${model.name}Schema`,
         initializer: (writer) => {
           return writer
-            .write(`${model.name}.tailor('update')`);
+            .write(`${model.name}Schema.tailor('update')`);
         },
       }],
     });

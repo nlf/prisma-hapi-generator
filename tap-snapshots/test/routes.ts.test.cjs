@@ -7,7 +7,8 @@
 'use strict'
 exports[`test/routes.ts TAP generates routes > /lib/routes/author/create.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions, RouteOptionsValidate } from '@hapi/hapi';
-import { Schemas, type CreateAuthorPayload } from '../../../lib';
+import { CreateAuthorSchema } from '../../schemas';
+import type { CreateAuthorPayload } from '../../types';
 
 async function handler(request: Request<CreateAuthorPayload>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   const result = await h.prisma.author.create({ data: request.payload });
@@ -17,18 +18,19 @@ async function handler(request: Request<CreateAuthorPayload>, h: ResponseToolkit
 }
 
 const validate: RouteOptionsValidate = {
-  payload: Schemas.CreateAuthor,
+  payload: CreateAuthorSchema,
 };
 
-export const CreateAuthor: RouteOptions = {
+export const CreateAuthorRoute: RouteOptions = {
   handler,
+  validate,
 };
 
 `
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/author/delete.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions } from '@hapi/hapi';
-import type { AuthorParams } from '../../../lib';
+import type { AuthorParams } from '../../types';
 
 async function handler(request: Request<AuthorParams>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   await h.prisma.author.delete({
@@ -40,7 +42,7 @@ async function handler(request: Request<AuthorParams>, h: ResponseToolkit): Prom
   return h.response().code(200);
 }
 
-export const DeleteAuthor: RouteOptions = {
+export const DeleteAuthorRoute: RouteOptions = {
   handler,
 };
 
@@ -48,7 +50,7 @@ export const DeleteAuthor: RouteOptions = {
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/author/get.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions } from '@hapi/hapi';
-import type { AuthorParams } from '../../../lib';
+import type { AuthorParams } from '../../types';
 
 async function handler(request: Request<AuthorParams>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   const result = await h.prisma.author.findUnique({
@@ -64,18 +66,18 @@ async function handler(request: Request<AuthorParams>, h: ResponseToolkit): Prom
   return result;
 }
 
-export const GetAuthor: RouteOptions = {
+export const GetAuthorRoute: RouteOptions = {
   handler,
 };
 
 `
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/author/index.ts 1`] = `
-export { CreateAuthor } from './create';
-export { DeleteAuthor } from './delete';
-export { GetAuthor } from './get';
-export { ListAuthor } from './list';
-export { UpdateAuthor } from './update';
+export { CreateAuthorRoute } from './create';
+export { DeleteAuthorRoute } from './delete';
+export { GetAuthorRoute } from './get';
+export { ListAuthorRoute } from './list';
+export { UpdateAuthorRoute } from './update';
 
 `
 
@@ -88,7 +90,7 @@ async function handler(request: Request, h: ResponseToolkit): Promise<Lifecycle.
   return result;
 }
 
-export const ListAuthor: RouteOptions = {
+export const ListAuthorRoute: RouteOptions = {
   handler,
 };
 
@@ -96,7 +98,8 @@ export const ListAuthor: RouteOptions = {
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/author/update.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions, RouteOptionsValidate } from '@hapi/hapi';
-import { Schemas, type ErrorWithCode, type UpdateAuthorPayload, type AuthorParams } from '../../../lib';
+import { UpdateAuthorSchema } from '../../schemas';
+import type { ErrorWithCode, UpdateAuthorPayload, AuthorParams } from '../../types';
 
 async function handler(request: Request<UpdateAuthorPayload & AuthorParams>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   try {
@@ -120,18 +123,20 @@ async function handler(request: Request<UpdateAuthorPayload & AuthorParams>, h: 
 }
 
 const validate: RouteOptionsValidate = {
-  payload: Schemas.UpdateAuthor,
+  payload: UpdateAuthorSchema,
 };
 
-export const UpdateAuthor: RouteOptions = {
+export const UpdateAuthorRoute: RouteOptions = {
   handler,
+  validate,
 };
 
 `
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/book/create.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions, RouteOptionsValidate } from '@hapi/hapi';
-import { Schemas, type CreateBookPayload } from '../../../lib';
+import { CreateBookSchema } from '../../schemas';
+import type { CreateBookPayload } from '../../types';
 
 async function handler(request: Request<CreateBookPayload>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   const result = await h.prisma.book.create({ data: request.payload });
@@ -141,18 +146,19 @@ async function handler(request: Request<CreateBookPayload>, h: ResponseToolkit):
 }
 
 const validate: RouteOptionsValidate = {
-  payload: Schemas.CreateBook,
+  payload: CreateBookSchema,
 };
 
-export const CreateBook: RouteOptions = {
+export const CreateBookRoute: RouteOptions = {
   handler,
+  validate,
 };
 
 `
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/book/delete.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions } from '@hapi/hapi';
-import type { BookParams } from '../../../lib';
+import type { BookParams } from '../../types';
 
 async function handler(request: Request<BookParams>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   await h.prisma.book.delete({
@@ -164,7 +170,7 @@ async function handler(request: Request<BookParams>, h: ResponseToolkit): Promis
   return h.response().code(200);
 }
 
-export const DeleteBook: RouteOptions = {
+export const DeleteBookRoute: RouteOptions = {
   handler,
 };
 
@@ -172,7 +178,7 @@ export const DeleteBook: RouteOptions = {
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/book/get.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions } from '@hapi/hapi';
-import type { BookParams } from '../../../lib';
+import type { BookParams } from '../../types';
 
 async function handler(request: Request<BookParams>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   const result = await h.prisma.book.findUnique({
@@ -188,18 +194,18 @@ async function handler(request: Request<BookParams>, h: ResponseToolkit): Promis
   return result;
 }
 
-export const GetBook: RouteOptions = {
+export const GetBookRoute: RouteOptions = {
   handler,
 };
 
 `
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/book/index.ts 1`] = `
-export { CreateBook } from './create';
-export { DeleteBook } from './delete';
-export { GetBook } from './get';
-export { ListBook } from './list';
-export { UpdateBook } from './update';
+export { CreateBookRoute } from './create';
+export { DeleteBookRoute } from './delete';
+export { GetBookRoute } from './get';
+export { ListBookRoute } from './list';
+export { UpdateBookRoute } from './update';
 
 `
 
@@ -212,7 +218,7 @@ async function handler(request: Request, h: ResponseToolkit): Promise<Lifecycle.
   return result;
 }
 
-export const ListBook: RouteOptions = {
+export const ListBookRoute: RouteOptions = {
   handler,
 };
 
@@ -220,7 +226,8 @@ export const ListBook: RouteOptions = {
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/book/update.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions, RouteOptionsValidate } from '@hapi/hapi';
-import { Schemas, type ErrorWithCode, type UpdateBookPayload, type BookParams } from '../../../lib';
+import { UpdateBookSchema } from '../../schemas';
+import type { ErrorWithCode, UpdateBookPayload, BookParams } from '../../types';
 
 async function handler(request: Request<UpdateBookPayload & BookParams>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   try {
@@ -244,46 +251,47 @@ async function handler(request: Request<UpdateBookPayload & BookParams>, h: Resp
 }
 
 const validate: RouteOptionsValidate = {
-  payload: Schemas.UpdateBook,
+  payload: UpdateBookSchema,
 };
 
-export const UpdateBook: RouteOptions = {
+export const UpdateBookRoute: RouteOptions = {
   handler,
+  validate,
 };
 
 `
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/index.ts 1`] = `
 import type { ServerRoute } from '@hapi/hapi';
-import { CreateAuthor, DeleteAuthor, GetAuthor, ListAuthor, UpdateAuthor } from './author';
-import { CreateBook, DeleteBook, GetBook, ListBook, UpdateBook } from './book';
-import { CreateReview, DeleteReview, GetReview, ListReview, UpdateReview } from './review';
+import { CreateAuthorRoute, DeleteAuthorRoute, GetAuthorRoute, ListAuthorRoute, UpdateAuthorRoute } from './author';
+import { CreateBookRoute, DeleteBookRoute, GetBookRoute, ListBookRoute, UpdateBookRoute } from './book';
+import { CreateReviewRoute, DeleteReviewRoute, GetReviewRoute, ListReviewRoute, UpdateReviewRoute } from './review';
 
 // DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
 const authorRoutes: ServerRoute[] = [
-  { method: 'POST', path: '/author', options: CreateAuthor },
-  { method: 'DELETE', path: '/author/{authorId}', options: DeleteAuthor },
-  { method: 'GET', path: '/author/{authorId}', options: GetAuthor },
-  { method: 'GET', path: '/author', options: ListAuthor },
-  { method: 'PUT', path: '/author/{authorId}', options: UpdateAuthor },
+  { method: 'POST', path: '/author', options: CreateAuthorRoute },
+  { method: 'DELETE', path: '/author/{authorId}', options: DeleteAuthorRoute },
+  { method: 'GET', path: '/author/{authorId}', options: GetAuthorRoute },
+  { method: 'GET', path: '/author', options: ListAuthorRoute },
+  { method: 'PUT', path: '/author/{authorId}', options: UpdateAuthorRoute },
 ];
 
 // DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
 const bookRoutes: ServerRoute[] = [
-  { method: 'POST', path: '/book', options: CreateBook },
-  { method: 'DELETE', path: '/book/{bookId}', options: DeleteBook },
-  { method: 'GET', path: '/book/{bookId}', options: GetBook },
-  { method: 'GET', path: '/book', options: ListBook },
-  { method: 'PUT', path: '/book/{bookId}', options: UpdateBook },
+  { method: 'POST', path: '/book', options: CreateBookRoute },
+  { method: 'DELETE', path: '/book/{bookId}', options: DeleteBookRoute },
+  { method: 'GET', path: '/book/{bookId}', options: GetBookRoute },
+  { method: 'GET', path: '/book', options: ListBookRoute },
+  { method: 'PUT', path: '/book/{bookId}', options: UpdateBookRoute },
 ];
 
 // DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
 const reviewRoutes: ServerRoute[] = [
-  { method: 'POST', path: '/review', options: CreateReview },
-  { method: 'DELETE', path: '/review/{reviewId}', options: DeleteReview },
-  { method: 'GET', path: '/review/{reviewId}', options: GetReview },
-  { method: 'GET', path: '/review', options: ListReview },
-  { method: 'PUT', path: '/review/{reviewId}', options: UpdateReview },
+  { method: 'POST', path: '/review', options: CreateReviewRoute },
+  { method: 'DELETE', path: '/review/{reviewId}', options: DeleteReviewRoute },
+  { method: 'GET', path: '/review/{reviewId}', options: GetReviewRoute },
+  { method: 'GET', path: '/review', options: ListReviewRoute },
+  { method: 'PUT', path: '/review/{reviewId}', options: UpdateReviewRoute },
 ];
 
 const routes: ServerRoute[] = [
@@ -298,7 +306,8 @@ export default routes;
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/review/create.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions, RouteOptionsValidate } from '@hapi/hapi';
-import { Schemas, type CreateReviewPayload } from '../../../lib';
+import { CreateReviewSchema } from '../../schemas';
+import type { CreateReviewPayload } from '../../types';
 
 async function handler(request: Request<CreateReviewPayload>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   const result = await h.prisma.review.create({ data: request.payload });
@@ -308,18 +317,19 @@ async function handler(request: Request<CreateReviewPayload>, h: ResponseToolkit
 }
 
 const validate: RouteOptionsValidate = {
-  payload: Schemas.CreateReview,
+  payload: CreateReviewSchema,
 };
 
-export const CreateReview: RouteOptions = {
+export const CreateReviewRoute: RouteOptions = {
   handler,
+  validate,
 };
 
 `
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/review/delete.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions } from '@hapi/hapi';
-import type { ReviewParams } from '../../../lib';
+import type { ReviewParams } from '../../types';
 
 async function handler(request: Request<ReviewParams>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   await h.prisma.review.delete({
@@ -331,7 +341,7 @@ async function handler(request: Request<ReviewParams>, h: ResponseToolkit): Prom
   return h.response().code(200);
 }
 
-export const DeleteReview: RouteOptions = {
+export const DeleteReviewRoute: RouteOptions = {
   handler,
 };
 
@@ -339,7 +349,7 @@ export const DeleteReview: RouteOptions = {
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/review/get.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions } from '@hapi/hapi';
-import type { ReviewParams } from '../../../lib';
+import type { ReviewParams } from '../../types';
 
 async function handler(request: Request<ReviewParams>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   const result = await h.prisma.review.findUnique({
@@ -355,18 +365,18 @@ async function handler(request: Request<ReviewParams>, h: ResponseToolkit): Prom
   return result;
 }
 
-export const GetReview: RouteOptions = {
+export const GetReviewRoute: RouteOptions = {
   handler,
 };
 
 `
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/review/index.ts 1`] = `
-export { CreateReview } from './create';
-export { DeleteReview } from './delete';
-export { GetReview } from './get';
-export { ListReview } from './list';
-export { UpdateReview } from './update';
+export { CreateReviewRoute } from './create';
+export { DeleteReviewRoute } from './delete';
+export { GetReviewRoute } from './get';
+export { ListReviewRoute } from './list';
+export { UpdateReviewRoute } from './update';
 
 `
 
@@ -379,7 +389,7 @@ async function handler(request: Request, h: ResponseToolkit): Promise<Lifecycle.
   return result;
 }
 
-export const ListReview: RouteOptions = {
+export const ListReviewRoute: RouteOptions = {
   handler,
 };
 
@@ -387,7 +397,8 @@ export const ListReview: RouteOptions = {
 
 exports[`test/routes.ts TAP generates routes > /lib/routes/review/update.ts 1`] = `
 import type { Lifecycle, Request, ResponseToolkit, RouteOptions, RouteOptionsValidate } from '@hapi/hapi';
-import { Schemas, type ErrorWithCode, type UpdateReviewPayload, type ReviewParams } from '../../../lib';
+import { UpdateReviewSchema } from '../../schemas';
+import type { ErrorWithCode, UpdateReviewPayload, ReviewParams } from '../../types';
 
 async function handler(request: Request<UpdateReviewPayload & ReviewParams>, h: ResponseToolkit): Promise<Lifecycle.ReturnValue> {
   try {
@@ -411,11 +422,12 @@ async function handler(request: Request<UpdateReviewPayload & ReviewParams>, h: 
 }
 
 const validate: RouteOptionsValidate = {
-  payload: Schemas.UpdateReview,
+  payload: UpdateReviewSchema,
 };
 
-export const UpdateReview: RouteOptions = {
+export const UpdateReviewRoute: RouteOptions = {
   handler,
+  validate,
 };
 
 `

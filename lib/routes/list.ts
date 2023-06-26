@@ -13,11 +13,11 @@ import {
   ensureNamedImports,
   ensureObjectDeclaration,
   getCamelName,
-  type GenerateOptions,
+  type HapiGeneratorOptions,
 } from '../util';
 
-export function generateListRouteFile (project: Project, model: DMMF.Model, options: GenerateOptions) {
-  const listFilePath = join(options.cwd, 'list.ts');
+export function generateListRouteFile (project: Project, model: DMMF.Model, options: HapiGeneratorOptions) {
+  const listFilePath = join(options.paths.routes, getCamelName(model.name), 'list.ts');
   const listFile = project.addSourceFileAtPathIfExists(listFilePath) ?? project.createSourceFile(listFilePath);
 
   ensureNamedImports(listFile, '@hapi/hapi', {
@@ -44,7 +44,7 @@ export function generateListRouteFile (project: Project, model: DMMF.Model, opti
     },
   });
 
-  ensureObjectDeclaration(listFile, `List${model.name}`, {
+  ensureObjectDeclaration(listFile, `List${model.name}Route`, {
     type: 'RouteOptions',
     declarationKind: VariableDeclarationKind.Const,
     isExported: true,

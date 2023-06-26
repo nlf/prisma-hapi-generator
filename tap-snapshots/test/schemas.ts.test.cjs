@@ -65,16 +65,16 @@ const Root = Joi.object().keys({
   }),
 });
 
-export const Author = Root.extract('Author');
-export const CreateAuthor = Author.tailor('create');
-export const UpdateAuthor = Author.tailor('update');
+export const AuthorSchema = Root.extract('Author');
+export const CreateAuthorSchema = AuthorSchema.tailor('create');
+export const UpdateAuthorSchema = AuthorSchema.tailor('update');
 
-export const Book = Root.extract('Book');
-export const CreateBook = Book.tailor('create');
-export const UpdateBook = Book.tailor('update');
+export const BookSchema = Root.extract('Book');
+export const CreateBookSchema = BookSchema.tailor('create');
+export const UpdateBookSchema = BookSchema.tailor('update');
 
-export const Review = Root.extract('Review');
-export const CreateReview = Review.tailor('create');
-export const UpdateReview = Review.tailor('update');
+export const ReviewSchema = Root.extract('Review');
+export const CreateReviewSchema = ReviewSchema.tailor('create');
+export const UpdateReviewSchema = ReviewSchema.tailor('update');
 
 `

@@ -1,9 +1,12 @@
-import { join } from 'node:path';
 import { type Project, ModuleDeclarationKind } from 'ts-morph';
 
-import type { GenerateOptions } from './util';
+import {
+  getCamelName,
+  getRelativeImport,
+  type HapiGeneratorOptions,
+} from './util';
 
-const getIdType = (fieldType: string): string => {
+function getIdType (fieldType: string): string {
   if (fieldType === 'String') {
     return 'string';
   }
@@ -15,31 +18,27 @@ const getIdType = (fieldType: string): string => {
 
   // istanbul ignore next - should be unreachable, only here to maintain a consistent return type
   return 'unknown';
-};
+}
 
-export function generateTypesFile (project: Project, options: GenerateOptions) {
-  const typesFilePath = join(options.config.output, 'types.ts');
-  const typesFile = project.createSourceFile(typesFilePath, {}, { overwrite: true });
-
-  const clientPath = project.createDirectory(options.config.output)
-    .getRelativePathAsModuleSpecifierTo(options.config.clientPath);
+export function generateTypesFile (project: Project, options: HapiGeneratorOptions) {
+  const typesFile = project.createSourceFile(options.paths.types, {}, { overwrite: true });
 
   typesFile.addImportDeclaration({
-    moduleSpecifier: clientPath,
+    moduleSpecifier: '@hapi/hapi',
     isTypeOnly: true,
-    namedImports: ['Prisma', 'PrismaClient'],
+    namespaceImport: 'Hapi',
     leadingTrivia: (writer) => {
       return writer
-        .write(options.fileHeader)
+        .write(options.headers.file)
         .newLine()
         .newLine();
     },
   });
 
   typesFile.addImportDeclaration({
-    moduleSpecifier: '@hapi/hapi',
+    moduleSpecifier: getRelativeImport(options.paths.types, options.paths.client),
     isTypeOnly: true,
-    namespaceImport: 'Hapi',
+    namedImports: ['Prisma', 'PrismaClient'],
   });
 
   typesFile.addInterface({
@@ -78,12 +77,11 @@ export function generateTypesFile (project: Project, options: GenerateOptions) {
     });
 
     // and the params
-    const idFieldName = model.name[0].toLowerCase() + model.name.slice(1) + 'Id';
     const idField = model.fields.find((field) => field.isId);
     typesFile.addInterface({
       name: `${model.name}IdParam`,
       properties: [{
-        name: idFieldName,
+        name: `${getCamelName(model.name)}Id`,
         // coverage disabled on the null coalescing because it shouldn't be possible
         type: getIdType(idField?.type ?? /* istanbul ignore next */ 'unknown'),
       }],

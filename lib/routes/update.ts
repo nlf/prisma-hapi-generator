@@ -13,22 +13,23 @@ import {
   ensureNamedImports,
   ensureObjectDeclaration,
   getCamelName,
-  type GenerateOptions,
+  getRelativeImport,
+  type HapiGeneratorOptions,
 } from '../util';
 
-export function generateUpdateRouteFile (project: Project, model: DMMF.Model, options: GenerateOptions) {
-  const updateFilePath = join(options.cwd, 'update.ts');
+export function generateUpdateRouteFile (project: Project, model: DMMF.Model, options: HapiGeneratorOptions) {
+  const updateFilePath = join(options.paths.routes, getCamelName(model.name), 'update.ts');
   const updateFile = project.addSourceFileAtPathIfExists(updateFilePath) ?? project.createSourceFile(updateFilePath);
 
   ensureNamedImports(updateFile, '@hapi/hapi', {
     types: ['Lifecycle', 'Request', 'ResponseToolkit', 'RouteOptions', 'RouteOptionsValidate'],
   });
 
-  const relPath = project.createDirectory(options.cwd)
-    .getRelativePathAsModuleSpecifierTo(options.config.output);
+  ensureNamedImports(updateFile, getRelativeImport(updateFilePath, options.paths.schemas), {
+    named: [`Update${model.name}Schema`],
+  });
 
-  ensureNamedImports(updateFile, relPath, {
-    named: ['Schemas'],
+  ensureNamedImports(updateFile, getRelativeImport(updateFilePath, options.paths.types), {
     types: ['ErrorWithCode', `Update${model.name}Payload`, `${model.name}Params`],
   });
 
@@ -89,12 +90,12 @@ export function generateUpdateRouteFile (project: Project, model: DMMF.Model, op
     properties: {
       payload: {
         kind: StructureKind.PropertyAssignment,
-        initializer: `Schemas.Update${model.name}`,
+        initializer: `Update${model.name}Schema`,
       },
     },
   });
 
-  ensureObjectDeclaration(updateFile, `Update${model.name}`, {
+  ensureObjectDeclaration(updateFile, `Update${model.name}Route`, {
     type: 'RouteOptions',
     declarationKind: VariableDeclarationKind.Const,
     isExported: true,

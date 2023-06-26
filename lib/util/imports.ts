@@ -1,6 +1,21 @@
+import { dirname, extname, relative } from 'node:path';
 import type { SourceFile } from 'ts-morph';
 
-export const ensureDefaultImport = (sourceFile: SourceFile, defaultImport: string, moduleSpecifier: string) => {
+export function getRelativeImport (from: string, to: string) {
+  // from is always a file, so we want the directory name
+  let relPath = relative(dirname(from), to);
+  if (!relPath.startsWith('.')) {
+    relPath = './' + relPath;
+  }
+
+  if (extname(relPath) !== '') {
+    relPath = relPath.slice(0, -extname(relPath).length);
+  }
+
+  return relPath;
+}
+
+export function ensureDefaultImport (sourceFile: SourceFile, defaultImport: string, moduleSpecifier: string) {
   const importNode = sourceFile.getImportDeclaration(moduleSpecifier)
     ?? sourceFile.addImportDeclaration({ moduleSpecifier });
 
@@ -10,14 +25,14 @@ export const ensureDefaultImport = (sourceFile: SourceFile, defaultImport: strin
   } else {
     importNode.renameDefaultImport(defaultImport);
   }
-};
+}
 
 interface EnsureNamedImportsOptions {
   named?: string[];
   types?: string[];
 }
 
-export const ensureNamedImports = (sourceFile: SourceFile, moduleSpecifier: string, options: EnsureNamedImportsOptions) => {
+export function ensureNamedImports (sourceFile: SourceFile, moduleSpecifier: string, options: EnsureNamedImportsOptions) {
   const importNode = sourceFile.getImportDeclaration(moduleSpecifier)
     ?? sourceFile.addImportDeclaration({ moduleSpecifier });
 
@@ -65,4 +80,4 @@ export const ensureNamedImports = (sourceFile: SourceFile, moduleSpecifier: stri
       existingImport.setIsTypeOnly(false);
     }
   }
-};
+}

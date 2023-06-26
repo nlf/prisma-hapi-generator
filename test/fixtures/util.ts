@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import type { GeneratorOptions } from '@prisma/generator-helper';
 import { getConfig, getDMMF } from '@prisma/internals';
@@ -22,7 +23,11 @@ export const getGeneratorOptions = async (test: Tap.Test) => {
   });
 
   const generator = generatorConfig.generators.find((g) => g.provider.value === 'prisma-hapi-generator');
+  generator!.output!.value = resolve('/', generator!.output!.value!);
   const otherGenerators = generatorConfig.generators.filter((g) => g.provider.value !== 'prisma-hapi-generator');
+  for (const otherGenerator of otherGenerators) {
+    otherGenerator.output!.value = resolve('/', otherGenerator.output!.value!);
+  }
 
   const generatorOptions: GeneratorOptions = {
     datamodel: schemaFixture,

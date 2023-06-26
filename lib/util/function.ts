@@ -7,7 +7,7 @@ interface EnsureFunctionDeclarationOptions {
   statements?: WriterFunction;
 }
 
-export const ensureFunctionDeclaration = (sourceFile: SourceFile, functionName: string, options: EnsureFunctionDeclarationOptions) => {
+export function ensureFunctionDeclaration (sourceFile: SourceFile, functionName: string, options: EnsureFunctionDeclarationOptions) {
   const existingFunction = sourceFile.getFunction(functionName);
   if (!existingFunction) {
     sourceFile.addFunction({
@@ -35,5 +35,5 @@ export const ensureFunctionDeclaration = (sourceFile: SourceFile, functionName: 
     }
     existingFunction.addParameters(options.parameters);
   }
-};
+}
 
