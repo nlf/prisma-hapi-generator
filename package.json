@@ -9,6 +9,7 @@
   "scripts": {
     "clean": "rm -f lib/*.js lib/util/*.js lib/routes/*.js",
     "lint": "eslint .",
+    "prepare": "tsc",
     "pretest": "npm run clean",
     "test": "tap",
     "posttest": "npm run lint",
