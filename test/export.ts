@@ -13,6 +13,4 @@ void t.test('generates exports', async (t) => {
 
   const exportFile = project.getSourceFileOrThrow('/lib/index.ts');
   t.matchSnapshot(exportFile.getFullText(), '/lib/index.ts');
-
-  t.end();
 });
