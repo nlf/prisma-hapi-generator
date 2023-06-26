@@ -35,5 +35,5 @@ export const generateExportFile = (project: Project, options: GenerateOptions) =
     moduleSpecifier: './types',
   });
 
-  exportFile.formatText();
+  exportFile.formatText(options.formatSettings);
 };
