@@ -34,7 +34,7 @@ async function handler(request: Request<AuthorParams>, h: ResponseToolkit): Prom
   await h.prisma.author.delete({
     where: {
       id: request.params.authorId,
-    }
+    },
   });
 
   return h.response().code(200);
@@ -158,7 +158,7 @@ async function handler(request: Request<BookParams>, h: ResponseToolkit): Promis
   await h.prisma.book.delete({
     where: {
       id: request.params.bookId,
-    }
+    },
   });
 
   return h.response().code(200);
@@ -323,7 +323,7 @@ async function handler(request: Request<ReviewParams>, h: ResponseToolkit): Prom
   await h.prisma.review.delete({
     where: {
       id: request.params.reviewId,
-    }
+    },
   });
 
   return h.response().code(200);
