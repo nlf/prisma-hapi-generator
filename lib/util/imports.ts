@@ -1,5 +1,17 @@
 import type { SourceFile } from 'ts-morph';
 
+export const ensureDefaultImport = (sourceFile: SourceFile, defaultImport: string, moduleSpecifier: string) => {
+  const importNode = sourceFile.getImportDeclaration(moduleSpecifier)
+    ?? sourceFile.addImportDeclaration({ moduleSpecifier });
+
+  const existingImport = importNode.getDefaultImport();
+  if (!existingImport) {
+    importNode.setDefaultImport(defaultImport);
+  } else {
+    importNode.renameDefaultImport(defaultImport);
+  }
+};
+
 interface EnsureNamedImportsOptions {
   named?: string[];
   types?: string[];
