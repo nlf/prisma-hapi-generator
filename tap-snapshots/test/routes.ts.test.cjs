@@ -269,29 +269,29 @@ import { CreateReviewRoute, DeleteReviewRoute, GetReviewRoute, ListReviewRoute, 
 
 // DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
 const authorRoutes: ServerRoute[] = [
-  { method: 'POST', path: '/author', options: CreateAuthorRoute },
-  { method: 'DELETE', path: '/author/{authorId}', options: DeleteAuthorRoute },
-  { method: 'GET', path: '/author/{authorId}', options: GetAuthorRoute },
-  { method: 'GET', path: '/author', options: ListAuthorRoute },
-  { method: 'PUT', path: '/author/{authorId}', options: UpdateAuthorRoute },
+  { method: 'POST', path: '/authors', options: CreateAuthorRoute },
+  { method: 'DELETE', path: '/authors/{authorId}', options: DeleteAuthorRoute },
+  { method: 'GET', path: '/authors/{authorId}', options: GetAuthorRoute },
+  { method: 'GET', path: '/authors', options: ListAuthorRoute },
+  { method: 'PUT', path: '/authors/{authorId}', options: UpdateAuthorRoute },
 ];
 
 // DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
 const bookRoutes: ServerRoute[] = [
-  { method: 'POST', path: '/book', options: CreateBookRoute },
-  { method: 'DELETE', path: '/book/{bookId}', options: DeleteBookRoute },
-  { method: 'GET', path: '/book/{bookId}', options: GetBookRoute },
-  { method: 'GET', path: '/book', options: ListBookRoute },
-  { method: 'PUT', path: '/book/{bookId}', options: UpdateBookRoute },
+  { method: 'POST', path: '/books', options: CreateBookRoute },
+  { method: 'DELETE', path: '/books/{bookId}', options: DeleteBookRoute },
+  { method: 'GET', path: '/books/{bookId}', options: GetBookRoute },
+  { method: 'GET', path: '/books', options: ListBookRoute },
+  { method: 'PUT', path: '/books/{bookId}', options: UpdateBookRoute },
 ];
 
 // DO NOT CHANGE THIS ARRAY. It is automatically generated and changes WILL be overwritten
 const reviewRoutes: ServerRoute[] = [
-  { method: 'POST', path: '/review', options: CreateReviewRoute },
-  { method: 'DELETE', path: '/review/{reviewId}', options: DeleteReviewRoute },
-  { method: 'GET', path: '/review/{reviewId}', options: GetReviewRoute },
-  { method: 'GET', path: '/review', options: ListReviewRoute },
-  { method: 'PUT', path: '/review/{reviewId}', options: UpdateReviewRoute },
+  { method: 'POST', path: '/reviews', options: CreateReviewRoute },
+  { method: 'DELETE', path: '/reviews/{reviewId}', options: DeleteReviewRoute },
+  { method: 'GET', path: '/reviews/{reviewId}', options: GetReviewRoute },
+  { method: 'GET', path: '/reviews', options: ListReviewRoute },
+  { method: 'PUT', path: '/reviews/{reviewId}', options: UpdateReviewRoute },
 ];
 
 const routes: ServerRoute[] = [
